@@ -1,0 +1,60 @@
+void quickSort()
+	{
+		if (pHead == NULL) return;
+		if (pHead->pNext == pHead) return;
+
+		Node* pivot = pHead;
+		List l1, l2;
+		const Node* oldHead = pHead;
+		pHead = pHead->pNext;
+		do
+		{
+			Node* current = pHead;
+			pHead = pHead->pNext;
+			if (current->data < pivot->data) l1.addTail(current);
+			else l2.addTail(current);
+
+		} while (pHead != oldHead);
+
+		l1.quickSort();
+		l2.quickSort();
+		
+		if (l1.pHead != NULL)
+		{
+			pHead = l1.pHead;
+			l1.pTail()->pNext = pivot;
+		}
+		else pHead = pivot;
+
+		if (l2.pHead != NULL)
+		{
+			pivot->pNext = l2.pHead;
+			l2.pTail()->pNext = pHead;
+		}
+		else pivot->pNext = pHead;
+	}
+
+void addTail(Node* node)
+	{
+		if (pHead == NULL)
+		{
+			pHead = node;
+			node->pNext = pHead;
+		}
+		else
+		{
+			pTail()->pNext = node;
+			node->pNext = pHead;
+		}
+	}
+
+Node* pTail()
+	{
+		if (pHead != NULL)
+		{
+			Node* temp = pHead;
+			while (temp->pNext != pHead) temp = temp->pNext;
+			return temp;
+		}
+		return NULL;
+	}
